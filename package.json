@@ -1,19 +1,19 @@
 {
-  "name": "game",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Robert Byrne",
-  "license": "MIT",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-csslint": "^0.4.0",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-html-validation": "^0.1.18",
-    "grunt-jsbeautifier": "^0.2.7",
-    "grunt-notify": "^0.4.1"
-  }
+	"name": "game",
+	"version": "0.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Robert Byrne",
+	"license": "MIT",
+	"devDependencies": {
+		"grunt": "^0.4.5",
+		"grunt-contrib-csslint": "^0.4.0",
+		"grunt-contrib-jshint": "^0.11.0",
+		"grunt-html-validation": "^0.1.18",
+		"grunt-jsbeautifier": "^0.2.7",
+		"grunt-notify": "^0.4.1"
+	}
 }
