@@ -41,8 +41,8 @@ window.onload = function() {
 
 	function create() {
 		
-		fpsText = game.add.bitmapText(2, 0, 'shortStack','FPS: ', 64);
-		livesText = game.add.bitmapText(2, 60, 'shortStack','FPS: ', 64);
+		fpsText = game.add.bitmapText(2, 0, 'shortStack','FPS: ', 32);
+		livesText = game.add.bitmapText(2, 30, 'shortStack','FPS: ', 32);
 		
 
 		game.physics.startSystem(Phaser.Physics.ARCADE);
