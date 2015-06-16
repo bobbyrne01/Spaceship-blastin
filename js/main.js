@@ -87,6 +87,11 @@ window.onload = function() {
 	    emitter2.minRotation = 0;
 	    emitter2.maxRotation = 0;
 	    emitter2.start(false, 1600, 5, 0);
+	    
+	    
+	    var graphics = game.add.graphics(0, 0);
+	    graphics.beginFill(0xFFFFFF, 1);
+	    graphics.drawRect(game.world.width - 13, 10, 5, 55);
 	}
 
 	function update() {
