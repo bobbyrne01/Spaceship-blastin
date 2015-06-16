@@ -30,10 +30,6 @@ window.onload = function() {
 		game.time.desiredFps = 60;
 		
 		game.load.image('missile', 'assets/sprites/ships/aliendropping0005.png');
-		game.load.image('stone23', 'assets/sprites/stone/elementStone011.png');
-		game.load.image('stone46', 'assets/sprites/stone/elementStone046.png');
-		game.load.image('metal1', 'assets/sprites/metal/elementMetal001.png');
-		game.load.image('player', 'assets/sprites/ships/smallfighter0007.png');
 		game.load.image('bullet', 'assets/sprites/other/bullet.png');
 		game.load.image('health', 'assets/sprites/hud/right_hbar.png');
 		
@@ -44,6 +40,8 @@ window.onload = function() {
 			
             game.load.image('bullet' + i, 'assets/sprites/bullets/bullet' + i + '.png');
         }
+		
+		game.load.image('player', 'assets/sprites/ships/F5S4.png');
 	}
 
 	function create() {
@@ -58,8 +56,8 @@ window.onload = function() {
 		game.input.onDown.add(gofull, this);
 		
 		player = game.add.sprite(
-				game.cache.getImage('stone23').width * 5, 
-				game.world.height - (game.cache.getImage('stone23').height * 2), 
+				game.world.width / 2, 
+				game.world.height, 
 				'player');
 		player.scale.setTo(0.5, 0.5);
 		game.physics.arcade.enable(player);
