@@ -4,7 +4,10 @@ window.onload = function() {
 		emitter,
 		lives = 5,
 		fpsText,
-		livesText;
+		livesText,
+		weapons = [],
+        currentWeapon = 0,
+        weaponName = null;
 
 	function gofull() {
 		game.scale.startFullScreen();
@@ -37,13 +40,19 @@ window.onload = function() {
 		game.load.spritesheet('rain', 'assets/sprites/other/rain.png', 17, 17);
 		
 		game.load.bitmapFont('shortStack', 'assets/sprites/other/desyrel.png', 'assets/sprites/other/desyrel.xml');
+		
+		
+		for (var i = 1; i <= 11; i++){
+			
+            game.load.image('bullet' + i, 'assets/sprites/bullets/bullet' + i + '.png');
+        }
 	}
 
 	function create() {
 		
-		fpsText = game.add.bitmapText(2, 0, 'shortStack','FPS: ', 32);
-		livesText = game.add.bitmapText(2, 30, 'shortStack','FPS: ', 32);
-		
+		fpsText = game.add.bitmapText(2, 0, 'shortStack','', 32);
+		livesText = game.add.bitmapText(2, 30, 'shortStack', '', 32);
+		weaponName = game.add.bitmapText(2, 60, 'shortStack', "Single Bullet", 32);
 
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.stage.backgroundColor = '#000';
@@ -64,7 +73,8 @@ window.onload = function() {
 	    
 	    fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	    leftButton = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-	    rightButton = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);		
+	    rightButton = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+	    changeKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 		
 		emitter = game.add.emitter(0, 100, 100);
 		emitter.makeParticles('missile');
@@ -92,15 +102,30 @@ window.onload = function() {
 	    var graphics = game.add.graphics(0, 0);
 	    graphics.beginFill(0xFFFFFF, 0.5);
 	    graphics.drawRect(game.world.width - 13, 10, 5, 55);
+	    
+	    weapons.push(new Weapon.SingleBullet(game));
+        weapons.push(new Weapon.ThreeWay(game));
+        weapons.push(new Weapon.EightWay(game));
+        weapons.push(new Weapon.ScatterShot(game));
+        weapons.push(new Weapon.Beam(game));
+        weapons.push(new Weapon.SplitShot(game));
+        weapons.push(new Weapon.Rockets(game));
+        weapons.push(new Weapon.ScaleBullet(game));
+
+        currentWeapon = 0;
+
+        for (var i = 1; i < weapons.length; i++){
+        	
+            weapons[i].visible = false;
+        }
+        
+        weapons[currentWeapon].visible = true;
 	}
 
 	function update() {
 		
 		game.physics.arcade.collide(player, emitter, null, change, this);
 		
-		/*
-		 * player movement
-		 */
 		if (leftButton.isDown){
 			player.x -= 4;
         
@@ -108,18 +133,29 @@ window.onload = function() {
 			player.x += 4;
         }
 		
-		/*
-		 * player shooting
-		 */
         if (fireButton.isDown){
-        	console.log('shoot');
+        	weapons[currentWeapon].fire(player);
         }
+        
+        changeKey.onDown.add(toggleWeapon);
 	}
 
 	function change(a, b) {
 		b.destroy();
 	    lives--;
 	    return false;
+	}
+	
+	function toggleWeapon () {
+		
+		if (currentWeapon === 7){
+			currentWeapon = 0;
+		}else{
+			currentWeapon++;
+		}
+		
+    	weapons[currentWeapon].visible = true;
+        weaponName.text = weapons[currentWeapon].name;
 	}
 
 	function render() {
