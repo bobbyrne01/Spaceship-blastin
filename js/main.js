@@ -90,11 +90,13 @@ window.onload = function() {
 	    
 	    
 	    var graphics = game.add.graphics(0, 0);
-	    graphics.beginFill(0xFFFFFF, 1);
+	    graphics.beginFill(0xFFFFFF, 0.5);
 	    graphics.drawRect(game.world.width - 13, 10, 5, 55);
 	}
 
 	function update() {
+		
+		game.physics.arcade.collide(player, emitter, null, change, this);
 		
 		/*
 		 * player movement
@@ -112,6 +114,12 @@ window.onload = function() {
         if (fireButton.isDown){
         	console.log('shoot');
         }
+	}
+
+	function change(a, b) {
+		b.destroy();
+	    lives--;
+	    return false;
 	}
 
 	function render() {
