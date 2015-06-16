@@ -38,9 +38,7 @@ window.onload = function() {
 		game.load.image('health', 'assets/sprites/hud/right_hbar.png');
 		
 		game.load.spritesheet('rain', 'assets/sprites/other/rain.png', 17, 17);
-		
 		game.load.bitmapFont('shortStack', 'assets/sprites/other/desyrel.png', 'assets/sprites/other/desyrel.xml');
-		
 		
 		for (var i = 1; i <= 11; i++){
 			
@@ -66,7 +64,6 @@ window.onload = function() {
 		player.scale.setTo(0.5, 0.5);
 		game.physics.arcade.enable(player);
 		player.body.collideWorldBounds = true;
-		//player.body.allowGravity = false;
 		
 		var health = game.add.sprite(game.world.width - (game.cache.getImage('health').width / 2), 0, 'health');
 		health.scale.setTo(0.5, 0.5);
@@ -74,6 +71,8 @@ window.onload = function() {
 	    fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	    leftButton = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 	    rightButton = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+	    upButton = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+	    downButton = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
 	    changeKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 		
 		emitter = game.add.emitter(0, 100, 100);
@@ -128,9 +127,18 @@ window.onload = function() {
 		
 		if (leftButton.isDown){
 			player.x -= 4;
-        
-		}else if (rightButton.isDown){
+		}
+		
+		if (rightButton.isDown){
 			player.x += 4;
+        }
+		
+		if (upButton.isDown){
+        	player.y -= 4;
+        }
+		
+		if (downButton.isDown){
+        	player.y += 4;
         }
 		
         if (fireButton.isDown){
