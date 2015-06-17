@@ -3,7 +3,7 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		jshint: {
-			files: ['Gruntfile.js', 'package.json', 'bower.json'],
+			files: ['Gruntfile.js', 'package.json', 'bower.json', 'js/main.js', 'js/bullets.js'],
 			options: {
 				moz: true,
 				force: true, // don't stop when there is an error
