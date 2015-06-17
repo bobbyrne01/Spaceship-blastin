@@ -1,5 +1,4 @@
 var player,
-	emitter,
 	lives = 5,
 	fpsText,
 	livesText,
@@ -13,7 +12,9 @@ var player,
 	DRAG = 400,
 	MAXSPEED = 400,
 	bank,
-	shipTrail;
+	shipTrail,
+	greenEnemies,
+	blueEnemies;
 
 function gofull() {
 	game.scale.startFullScreen();
@@ -40,6 +41,7 @@ function preload() {
 	game.load.image('missile', 'assets/sprites/ships/aliendropping0005.png');
 	game.load.image('bullet', 'assets/sprites/other/bullet.png');
 	game.load.image('trail', 'assets/sprites/other/trail.png');
+	game.load.image('redEnemy', 'assets/sprites/ships/spshipsprite.png');
 
 	game.load.spritesheet('kaboom', 'assets/sprites/other/explode.png', 128, 128);
 	game.load.spritesheet('rain', 'assets/sprites/other/rain.png', 17, 17);
@@ -57,7 +59,110 @@ function setupInvader(invader) {
 	invader.animations.add('kaboom');
 }
 
+function launchGreenEnemy() {
+	var MIN_ENEMY_SPACING = 300;
+	var MAX_ENEMY_SPACING = 3000;
+	var ENEMY_SPEED = 300;
+
+	var enemy = greenEnemies.getFirstExists(false);
+	if (enemy) {
+		enemy.reset(game.rnd.integerInRange(0, game.width), -20);
+		enemy.body.velocity.x = game.rnd.integerInRange(-300, 300);
+		enemy.body.velocity.y = ENEMY_SPEED;
+		enemy.body.drag.x = 100;
+		enemy.body.setSize(enemy.width * 4 / 2, enemy.height * 4 / 2);
+
+		enemy.update = function () {
+			enemy.angle = 180 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
+		};
+	}
+
+	//  Send another enemy soon
+	game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), launchGreenEnemy);
+}
+
+function launchBlueEnemy() {
+
+	var startingX = game.rnd.integerInRange(100, game.width - 100);
+	var verticalSpeed = 180;
+	var spread = 60;
+	var frequency = 70;
+	var verticalSpacing = 70;
+	var numEnemiesInWave = 5;
+	var timeBetweenWaves = 7000;
+
+	//  Launch wave
+	for (var i = 0; i < numEnemiesInWave; i++) {
+		var enemy = blueEnemies.getFirstExists(false);
+		if (enemy) {
+			enemy.startingX = startingX;
+			enemy.reset(game.width / 2, -verticalSpacing * i);
+			enemy.body.velocity.y = verticalSpeed;
+
+			//  Update function for each enemy
+			enemy.update = function () {
+
+				// wave movement
+				this.body.x = this.startingX + Math.sin((this.y) / frequency) * spread;
+
+				//  Squish and rotate ship for illusion of "banking"
+				bank = Math.cos((this.y + 60) / frequency);
+				this.scale.x = 0.25 - Math.abs(bank) / 30;
+				this.scale.y = 0.25
+				this.angle = 180 - bank * 10;
+
+				//  Kill enemies once they go off screen
+				if (this.y > game.height + 200) {
+					this.kill();
+				}
+			};
+		}
+	}
+
+	//  Send another wave soon
+	blueEnemyLaunchTimer = game.time.events.add(timeBetweenWaves, launchBlueEnemy);
+}
+
 function create() {
+
+	greenEnemies = game.add.group();
+	greenEnemies.enableBody = true;
+	greenEnemies.physicsBodyType = Phaser.Physics.ARCADE;
+	greenEnemies.createMultiple(5, 'alien');
+	greenEnemies.setAll('anchor.x', 0.5);
+	greenEnemies.setAll('anchor.y', 0.5);
+	greenEnemies.setAll('scale.x', 0.5);
+	greenEnemies.setAll('scale.y', 0.5);
+	greenEnemies.setAll('angle', 180);
+	greenEnemies.setAll('outOfBoundsKill', true);
+	greenEnemies.setAll('checkWorldBounds', true);
+	launchGreenEnemy();
+
+	blueEnemies = game.add.group();
+	blueEnemies.enableBody = true;
+	blueEnemies.physicsBodyType = Phaser.Physics.ARCADE;
+	blueEnemies.createMultiple(30, 'redEnemy');
+	blueEnemies.setAll('anchor.x', 0.5);
+	blueEnemies.setAll('anchor.y', 0.5);
+	blueEnemies.setAll('scale.x', 0.5);
+	blueEnemies.setAll('scale.y', 0.5);
+	blueEnemies.setAll('angle', 180);
+	blueEnemies.forEach(function (enemy) {
+		enemy.damageAmount = 40;
+	});
+
+	game.time.events.add(1000, launchBlueEnemy);
+
+	//  An explosion pool
+	explosions = game.add.group();
+	explosions.enableBody = true;
+	explosions.physicsBodyType = Phaser.Physics.ARCADE;
+	explosions.createMultiple(30, 'kaboom');
+	explosions.setAll('anchor.x', 0.5);
+	explosions.setAll('anchor.y', 0.5);
+	explosions.forEach(function (explosion) {
+		explosion.animations.add('kaboom');
+	});
 
 	fpsText = game.add.bitmapText(680, 0, 'shortStack', '', 32);
 	livesText = game.add.bitmapText(2, 0, 'shortStack', '', 32);
@@ -92,18 +197,6 @@ function create() {
 	upButton = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 	downButton = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
 	changeKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-
-	emitter = game.add.emitter(0, 100, 100);
-	emitter.makeParticles('alien');
-	emitter.gravity = 400;
-	emitter.width = 500;
-	emitter.x = game.world.width / 2;
-	emitter.y = -300;
-	emitter.minRotation = 0;
-	emitter.maxRotation = 0;
-	emitter.angle = 0;
-	emitter.setScale(0.1, 0.5, 0.1, 0.5, 6000, Phaser.Easing.Quintic.Out);
-	emitter.start(false, 2000, 500);
 
 	var emitter2 = game.add.emitter(game.world.centerX, 0, 400);
 	emitter2.width = game.world.width;
@@ -146,10 +239,28 @@ function create() {
 	weapons[currentWeapon].visible = true;
 }
 
+function shipCollide(player, enemy) {
+
+	lives--;
+	healthMeter = healthMeter - 10;
+	healthContainer.clear();
+	healthContainer.beginFill(0x01DF01, 1.0);
+	healthContainer.drawRect(5, 55, healthMeter, 10);
+
+	var explosion = explosions.getFirstExists(false);
+	explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
+	explosion.body.velocity.y = enemy.body.velocity.y;
+	explosion.alpha = 0.7;
+	explosion.play('kaboom', 30, false, true);
+	enemy.kill();
+}
+
 function update() {
 
 	player.bringToTop();
-	game.physics.arcade.collide(player, emitter, null, change, this);
+
+	game.physics.arcade.overlap(player, greenEnemies, shipCollide, null, this);
+	game.physics.arcade.overlap(player, blueEnemies, shipCollide, null, this);
 
 	player.body.acceleration.x = 0;
 	player.body.acceleration.y = 0;
@@ -194,26 +305,6 @@ function update() {
 	}
 
 	changeKey.onDown.add(toggleWeapon);
-}
-
-function change(a, b) {
-	b.destroy();
-
-	lives--;
-	healthMeter = healthMeter - 10;
-	healthContainer.clear();
-	healthContainer.beginFill(0x01DF01, 1.0);
-	healthContainer.drawRect(5, 55, healthMeter, 10);
-
-	// And create an explosion :)
-	explosions = game.add.group();
-	explosions.createMultiple(30, 'kaboom');
-	explosions.forEach(setupInvader, this);
-	var explosion = explosions.getFirstExists(false);
-	explosion.reset(player.body.x + player.body.width / 2, player.body.y + player.body.height / 2);
-	explosion.play('kaboom', 30, false, true);
-
-	return false;
 }
 
 function toggleWeapon() {

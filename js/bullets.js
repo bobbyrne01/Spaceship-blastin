@@ -22,7 +22,8 @@ Bullet.prototype.fire = function (x, y, angle, speed, gx, gy) {
 	gx = gx || 0;
 	gy = gy || 0;
 
-	this.reset(x, y);
+	var bulletOffset = 30 * Math.sin(game.math.degToRad(angle));
+	this.reset(x, y + bulletOffset);
 	this.scale.set(1);
 	this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
 	this.angle = angle;
@@ -76,7 +77,7 @@ Weapon.SingleBullet.prototype.fire = function (source) {
 	var x = source.x + source.width / 2;
 	var y = source.y + source.height / 2;
 
-	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 90, this.bulletSpeed, 0, 0);
 	this.nextFire = this.game.time.time + this.fireRate;
 
 };
