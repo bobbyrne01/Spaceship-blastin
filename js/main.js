@@ -8,7 +8,10 @@ var player,
 	weaponName = null,
 	explosions,
 	healthContainer,
-	healthMeter = 190;
+	healthMeter = 190,
+	ACCLERATION = 600,
+	DRAG = 400,
+	MAXSPEED = 400;
 
 function gofull() {
 	game.scale.startFullScreen();
@@ -77,6 +80,8 @@ function create() {
 	player.scale.setTo(0.25, 0.25);
 	game.physics.arcade.enable(player);
 	player.body.collideWorldBounds = true;
+	player.body.maxVelocity.setTo(MAXSPEED, MAXSPEED);
+	player.body.drag.setTo(DRAG, DRAG);
 
 	fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	leftButton = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -131,21 +136,24 @@ function update() {
 
 	player.bringToTop();
 	game.physics.arcade.collide(player, emitter, null, change, this);
+	
+	player.body.acceleration.x = 0;
+	player.body.acceleration.y = 0;
 
 	if (leftButton.isDown) {
-		player.x -= 4;
+		player.body.acceleration.x = -ACCLERATION;
 	}
 
 	if (rightButton.isDown) {
-		player.x += 4;
+		player.body.acceleration.x = ACCLERATION;
 	}
 
 	if (upButton.isDown) {
-		player.y -= 4;
+		player.body.acceleration.y = -ACCLERATION;
 	}
 
 	if (downButton.isDown) {
-		player.y += 4;
+		player.body.acceleration.y = ACCLERATION;
 	}
 
 	if (fireButton.isDown) {
