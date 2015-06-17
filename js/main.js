@@ -5,7 +5,10 @@ var	player,
 	livesText,
 	weapons = [],
     currentWeapon = 0,
-    weaponName = null;
+    weaponName = null,
+    explosions,
+    healthContainer,
+    healthMeter = 190;
 
 function gofull() {
 	game.scale.startFullScreen();
@@ -32,6 +35,7 @@ function preload() {
 	game.load.image('missile', 'assets/sprites/ships/aliendropping0005.png');
 	game.load.image('bullet', 'assets/sprites/other/bullet.png');
 	
+	game.load.spritesheet('kaboom', 'assets/sprites/other/explode.png', 128, 128);
 	game.load.spritesheet('rain', 'assets/sprites/other/rain.png', 17, 17);
 	game.load.bitmapFont('shortStack', 'assets/sprites/other/desyrel.png', 'assets/sprites/other/desyrel.xml');
 	
@@ -40,11 +44,26 @@ function preload() {
     }
 }
 
+function setupInvader (invader) {
+
+    invader.anchor.x = 0.5;
+    invader.anchor.y = 0.5;
+    invader.animations.add('kaboom');
+}
+
 function create() {
 	
-	fpsText = game.add.bitmapText(700, 0, 'shortStack','', 32);
-	livesText = game.add.bitmapText(2, 00, 'shortStack', '', 32);
-	weaponName = game.add.bitmapText(2, 30, 'shortStack', "Single Bullet", 32);
+	fpsText = game.add.bitmapText(680, 0, 'shortStack','', 32);
+	livesText = game.add.bitmapText(2, 0, 'shortStack', '', 32);
+	weaponName = game.add.bitmapText(680, 30, 'shortStack', "Single Bullet", 32);
+	
+	healthContainer = game.add.graphics(0, 0);
+    healthContainer.beginFill(0x01DF01, 1.0);
+    healthContainer.drawRect(5, 55, healthMeter, 10);
+    
+    health = game.add.graphics(0, 0);
+    health.beginFill(0xFFFFFF, 0.3);
+    health.drawRect(0, 50, 200, 20);
 
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	game.stage.backgroundColor = '#000';
@@ -55,7 +74,7 @@ function create() {
 			game.world.width / 2, 
 			game.world.height, 
 			'player');
-	player.scale.setTo(0.5, 0.5);
+	player.scale.setTo(0.25, 0.25);
 	game.physics.arcade.enable(player);
 	player.body.collideWorldBounds = true;
     
@@ -84,19 +103,10 @@ function create() {
     emitter2.minParticleScale = 0.1;
     emitter2.maxParticleScale = 0.5;
     emitter2.setYSpeed(300, 500);
-    emitter2.setXSpeed(-5, 5);
+    emitter2.setXSpeed(0, 0);
     emitter2.minRotation = 0;
     emitter2.maxRotation = 0;
     emitter2.start(false, 1600, 5, 0);
-    
-    
-    var healthContainer = game.add.graphics(0, 0);
-    healthContainer.beginFill(0x01DF01, 1.0);
-    healthContainer.drawRect(5, 75, 200, 10);
-    
-    var health = game.add.graphics(0, 0);
-    health.beginFill(0xFFFFFF, 0.3);
-    health.drawRect(0, 70, 210, 20);
     
     weapons.push(new Weapon.SingleBullet(game));
     weapons.push(new Weapon.ThreeWay(game));
@@ -147,7 +157,21 @@ function update() {
 
 function change(a, b) {
 	b.destroy();
+	
     lives--;
+    healthMeter = healthMeter - 10;
+    healthContainer.clear();
+    healthContainer.beginFill(0x01DF01, 1.0);
+    healthContainer.drawRect(5, 55, healthMeter, 10);
+    
+    // And create an explosion :)
+	explosions = game.add.group();
+	explosions.createMultiple(30, 'kaboom');
+	explosions.forEach(setupInvader, this);
+    var explosion = explosions.getFirstExists(false);
+    explosion.reset(player.body.x + player.body.width / 2, player.body.y + player.body.height / 2);
+    explosion.play('kaboom', 30, false, true);
+    
     return false;
 }
 
