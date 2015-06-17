@@ -39,7 +39,7 @@ function preload() {
 	game.load.image('alien', 'assets/sprites/ships/alien4.png');
 	game.load.image('missile', 'assets/sprites/ships/aliendropping0005.png');
 	game.load.image('bullet', 'assets/sprites/other/bullet.png');
-	game.load.image('trail', 'assets/sprites/other/trail.png')
+	game.load.image('trail', 'assets/sprites/other/trail.png');
 
 	game.load.spritesheet('kaboom', 'assets/sprites/other/explode.png', 128, 128);
 	game.load.spritesheet('rain', 'assets/sprites/other/rain.png', 17, 17);
@@ -115,14 +115,14 @@ function create() {
 	emitter2.minRotation = 0;
 	emitter2.maxRotation = 0;
 	emitter2.start(false, 1600, 5, 0);
-	
+
 	// Add an emitter for the ship's trail
 	shipTrail = game.add.emitter(player.x + player.body.width / 2, player.y + player.body.height, 400);
 	shipTrail.width = 10;
 	shipTrail.makeParticles('trail');
 	shipTrail.setXSpeed(30, -30);
 	shipTrail.setYSpeed(200, 180);
-	shipTrail.setRotation(50,-50);
+	shipTrail.setRotation(50, -50);
 	shipTrail.setAlpha(1, 0.01, 800);
 	shipTrail.setScale(0.05, 0.4, 0.05, 0.4, 2000, Phaser.Easing.Quintic.Out);
 	shipTrail.start(false, 5000, 10);
@@ -150,7 +150,7 @@ function update() {
 
 	player.bringToTop();
 	game.physics.arcade.collide(player, emitter, null, change, this);
-	
+
 	player.body.acceleration.x = 0;
 	player.body.acceleration.y = 0;
 
@@ -169,22 +169,22 @@ function update() {
 	if (downButton.isDown) {
 		player.body.acceleration.y = ACCLERATION;
 	}
-	
+
 	//  Stop at screen edges
 	if (player.x > game.width - (player.body.width / 2)) {
 		player.x = game.width - (player.body.width / 2);
-	    player.body.acceleration.x = 0;
+		player.body.acceleration.x = 0;
 	}
 	if (player.x < 0) {
 		player.x = 0;
-	    player.body.acceleration.x = 0;
+		player.body.acceleration.x = 0;
 	}
-	
+
 	//  Squish and rotate ship for illusion of "banking"
 	bank = player.body.velocity.x / MAXSPEED;
 	player.scale.x = 0.25 - Math.abs(bank) / 20;
 	player.angle = bank * 10;
-	
+
 	//  Keep the shipTrail lined up with the ship
 	shipTrail.x = player.x + player.body.width / 2;
 	shipTrail.y = player.y + player.body.height;
