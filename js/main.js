@@ -11,7 +11,8 @@ var player,
 	healthMeter = 190,
 	ACCLERATION = 600,
 	DRAG = 400,
-	MAXSPEED = 400;
+	MAXSPEED = 400,
+	bank;
 
 function gofull() {
 	game.scale.startFullScreen();
@@ -155,6 +156,21 @@ function update() {
 	if (downButton.isDown) {
 		player.body.acceleration.y = ACCLERATION;
 	}
+	
+	//  Stop at screen edges
+	if (player.x > game.width - (player.body.width / 2)) {
+		player.x = game.width - (player.body.width / 2);
+	    player.body.acceleration.x = 0;
+	}
+	if (player.x < 0) {
+		player.x = 0;
+	    player.body.acceleration.x = 0;
+	}
+	
+	//  Squish and rotate ship for illusion of "banking"
+	bank = player.body.velocity.x / MAXSPEED;
+	player.scale.x = 0.25 - Math.abs(bank) / 20;
+	player.angle = bank * 10;
 
 	if (fireButton.isDown) {
 		weapons[currentWeapon].fire(player);
