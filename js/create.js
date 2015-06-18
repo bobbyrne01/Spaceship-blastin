@@ -114,9 +114,8 @@ function create() {
 		explosion.animations.add('kaboom');
 	});
 
-	fpsText = game.add.bitmapText(680, 0, 'shortStack', '', 32);
-	livesText = game.add.bitmapText(2, 0, 'shortStack', '', 32);
-	weaponName = game.add.bitmapText(680, 30, 'shortStack', "Single Bullet", 32);
+	fpsText = game.add.bitmapText(625, 0, 'font', '', 32);
+	livesText = game.add.bitmapText(2, 0, 'font', '', 32);
 
 	healthContainer = game.add.graphics(0, 0);
 	healthContainer.beginFill(0x01DF01, 1.0);
