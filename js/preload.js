@@ -5,8 +5,6 @@ function preload() {
 
 	game.load.image('player', 'assets/sprites/ships/F5S4.png');
 	game.load.image('alien', 'assets/sprites/ships/alien4.png');
-	game.load.image('missile', 'assets/sprites/ships/aliendropping0005.png');
-	game.load.image('bullet', 'assets/sprites/other/bullet.png');
 	game.load.image('trail', 'assets/sprites/other/trail.png');
 	game.load.image('redEnemy', 'assets/sprites/ships/spshipsprite.png');
 
