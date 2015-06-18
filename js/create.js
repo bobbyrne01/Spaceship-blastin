@@ -115,15 +115,14 @@ function create() {
 	});
 
 	fpsText = game.add.bitmapText(625, 0, 'font', '', 32);
-	livesText = game.add.bitmapText(2, 0, 'font', '', 32);
 
 	healthContainer = game.add.graphics(0, 0);
 	healthContainer.beginFill(0x01DF01, 1.0);
-	healthContainer.drawRect(5, 55, healthMeter, 10);
+	healthContainer.drawRect(5, 5, healthMeter, 10);
 
 	health = game.add.graphics(0, 0);
 	health.beginFill(0xFFFFFF, 0.3);
-	health.drawRect(0, 50, 200, 20);
+	health.drawRect(0, 0, 200, 20);
 
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	game.stage.backgroundColor = '#000';

@@ -1,5 +1,4 @@
 var player,
-	lives = 5,
 	fpsText,
 	livesText,
 	weapons = [],

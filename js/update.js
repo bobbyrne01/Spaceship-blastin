@@ -12,11 +12,10 @@ function toggleWeapon() {
 
 function shipCollide(player, enemy) {
 
-	lives--;
 	healthMeter = healthMeter - 10;
 	healthContainer.clear();
 	healthContainer.beginFill(0x01DF01, 1.0);
-	healthContainer.drawRect(5, 55, healthMeter, 10);
+	healthContainer.drawRect(5, 5, healthMeter, 10);
 
 	var explosion = explosions.getFirstExists(false);
 	explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);

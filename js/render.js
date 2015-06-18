@@ -8,5 +8,4 @@ function render() {
 	}*/
 
 	fpsText.setText('FPS: ' + (game.time.fps || '--'));
-	livesText.setText('Lives: ' + lives);
 }
