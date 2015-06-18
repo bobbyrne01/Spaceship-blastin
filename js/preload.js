@@ -10,7 +10,7 @@ function preload() {
 	game.load.image('trail', 'assets/sprites/other/trail.png');
 	game.load.image('redEnemy', 'assets/sprites/ships/spshipsprite.png');
 
-	game.load.spritesheet('kaboom', 'assets/sprites/other/explode.png', 128, 128);
+	game.load.spritesheet('kaboom', 'assets/sprites/other/explosion.png', 128, 128);
 	game.load.spritesheet('rain', 'assets/sprites/other/rain.png', 17, 17);
 	game.load.bitmapFont('shortStack', 'assets/sprites/other/desyrel.png', 'assets/sprites/other/desyrel.xml');
 

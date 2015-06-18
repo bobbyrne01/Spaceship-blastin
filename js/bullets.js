@@ -1,6 +1,6 @@
-//  Our core Bullet class
-//  This is a simple Sprite object that we set a few properties on
-//  It is fired by all of the Weapon classes
+//  Core Bullet class
+//  Sprite object, with properties.
+//  Fired by all Weapon classes
 var Bullet = function (game, key) {
 
 	Phaser.Sprite.call(this, game, 0, 0, key);
