@@ -58,7 +58,7 @@ function launchBlueEnemy() {
 				//  Squish and rotate ship for illusion of "banking"
 				bank = Math.cos((this.y + 60) / frequency);
 				this.scale.x = 0.25 - Math.abs(bank) / 30;
-				this.scale.y = 0.25
+				this.scale.y = 0.25;
 				this.angle = 180 - bank * 10;
 
 				//  Kill enemies once they go off screen
