@@ -25,12 +25,30 @@ function shipCollide(player, enemy) {
 	enemy.kill();
 }
 
+function bulletCollide (enemy, bullet) {
+	
+	var explosion = explosions.getFirstExists(false);
+	explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
+	explosion.body.velocity.y = enemy.body.velocity.y;
+	explosion.alpha = 0.7;
+	explosion.play('kaboom', 30, false, true);
+	enemy.kill();
+	bullet.kill();
+}
+
 function update() {
 
 	player.bringToTop();
 
 	game.physics.arcade.overlap(player, greenEnemies, shipCollide, null, this);
 	game.physics.arcade.overlap(player, blueEnemies, shipCollide, null, this);
+	
+	for (var j = 0; j < weapons.length; j++) {
+		
+		game.physics.arcade.overlap(greenEnemies, weapons[j], bulletCollide, null, this);
+		game.physics.arcade.overlap(blueEnemies, weapons[j], bulletCollide, null, this);
+	}
+	
 
 	player.body.acceleration.x = 0;
 	player.body.acceleration.y = 0;
