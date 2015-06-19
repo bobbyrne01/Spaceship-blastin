@@ -1,6 +1,6 @@
 function toggleWeapon() {
 
-	if (currentWeapon === 7) {
+	if (currentWeapon === 6) {
 		currentWeapon = 0;
 	} else {
 		currentWeapon++;
