@@ -38,6 +38,8 @@ function shipCollide(player, enemy) {
 }
 
 function bulletCollide(enemy, bullet) {
+	
+	hit.play();
 
 	score = score + enemy.reward;
 

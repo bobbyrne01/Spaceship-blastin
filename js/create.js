@@ -73,15 +73,11 @@ function launchBlueEnemy() {
 	blueEnemyLaunchTimer = game.time.events.add(timeBetweenWaves, launchBlueEnemy);
 }
 
-function startAudio () {
-	sounds.shift();
-}
-
 function create() {
 	
-	music = game.add.audio('music');
-	sounds = [ music ];
-    game.sound.setDecodedCallback(sounds, startAudio, game);
+	music = game.add.audio('music',1,true);  // key, volume, loop
+	music.play('', 0, 1, true);
+	hit = game.add.audio('hit');
 
 	gameOver = game.add.bitmapText(game.world.centerX, game.world.centerY, 'font', 'GAME OVER!', 80);
 	gameOver.anchor.setTo(0.5, 0.5);

@@ -10,7 +10,8 @@ var player,
 	greenEnemies,
 	blueEnemies,
 	gameOver,
-	score = 0;
+	score = 0,
+	hit;
 
 var game = new Phaser.Game(
 	800,
