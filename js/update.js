@@ -1,13 +1,12 @@
 function toggleWeapon() {
 
-	if (currentWeapon === 6) {
-		currentWeapon = 0;
+	if (player.currentWeapon === 6) {
+		player.currentWeapon = 0;
 	} else {
-		currentWeapon++;
+		player.currentWeapon++;
 	}
 
-	weapons[currentWeapon].visible = true;
-	weaponName.text = weapons[currentWeapon].name;
+	weapons[player.currentWeapon].visible = true;
 }
 
 function shipCollide(player, enemy) {
@@ -125,7 +124,7 @@ function update() {
 	player.shipTrail.y = player.y + player.body.height;
 
 	if (fireButton.isDown) {
-		weapons[currentWeapon].fire(player);
+		weapons[player.currentWeapon].fire(player);
 	}
 
 	changeKey.onDown.add(toggleWeapon);

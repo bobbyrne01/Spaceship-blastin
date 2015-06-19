@@ -199,9 +199,10 @@ function create() {
 		game.world.height,
 		'player');
 	player.scale.setTo(0.25, 0.25);
-	player.acceleration = 1000;
+	player.acceleration = 1500;
 	player.drag = 400;
 	player.maxSpeed = 400;
+	player.currentWeapon = 0;
 	game.physics.arcade.enable(player);
 	player.body.collideWorldBounds = true;
 	player.body.maxVelocity.setTo(player.maxSpeed, player.maxSpeed);
@@ -244,12 +245,9 @@ function create() {
 	weapons.push(new Weapon.Rockets(game));
 	weapons.push(new Weapon.ScaleBullet(game));
 
-	currentWeapon = 0;
-
 	for (var i = 1; i < weapons.length; i++) {
-
 		weapons[i].visible = false;
 	}
 
-	weapons[currentWeapon].visible = true;
+	weapons[player.currentWeapon].visible = true;
 }
