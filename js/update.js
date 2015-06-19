@@ -86,19 +86,19 @@ function update() {
 	player.body.acceleration.y = 0;
 
 	if (leftButton.isDown) {
-		player.body.acceleration.x = -acceleration;
+		player.body.acceleration.x = -player.acceleration;
 	}
 
 	if (rightButton.isDown) {
-		player.body.acceleration.x = acceleration;
+		player.body.acceleration.x = player.acceleration;
 	}
 
 	if (upButton.isDown) {
-		player.body.acceleration.y = -acceleration;
+		player.body.acceleration.y = -player.acceleration;
 	}
 
 	if (downButton.isDown) {
-		player.body.acceleration.y = acceleration;
+		player.body.acceleration.y = player.acceleration;
 	}
 
 	//  Stop at screen edges
@@ -112,9 +112,9 @@ function update() {
 	}
 
 	//  Squish and rotate ship for illusion of "banking"
-	bank = player.body.velocity.x / maxSpeed;
-	player.scale.x = 0.25 - Math.abs(bank) / 20;
-	player.angle = bank * 10;
+	player.bank = player.body.velocity.x / player.maxSpeed;
+	player.scale.x = 0.25 - Math.abs(player.bank) / 20;
+	player.angle = player.bank * 10;
 
 	//  Keep the shipTrail lined up with the ship
 	shipTrail.x = player.x + player.body.width / 2;

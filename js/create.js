@@ -56,10 +56,10 @@ function launchBlueEnemy() {
 				this.body.x = this.startingX + Math.sin((this.y) / frequency) * spread;
 
 				//  Squish and rotate ship for illusion of "banking"
-				bank = Math.cos((this.y + 60) / frequency);
-				this.scale.x = 0.25 - Math.abs(bank) / 30;
+				enemy.bank = Math.cos((this.y + 60) / frequency);
+				this.scale.x = 0.25 - Math.abs(enemy.bank) / 30;
 				this.scale.y = 0.25;
-				this.angle = 180 - bank * 10;
+				this.angle = 180 - enemy.bank * 10;
 
 				//  Kill enemies once they go off screen
 				if (this.y > game.height + 200) {
@@ -144,10 +144,13 @@ function create() {
 		game.world.height,
 		'player');
 	player.scale.setTo(0.25, 0.25);
+	player.acceleration = 1000;
+	player.drag = 400;
+	player.maxSpeed = 400;
 	game.physics.arcade.enable(player);
 	player.body.collideWorldBounds = true;
-	player.body.maxVelocity.setTo(maxSpeed, maxSpeed);
-	player.body.drag.setTo(drag, drag);
+	player.body.maxVelocity.setTo(player.maxSpeed, player.maxSpeed);
+	player.body.drag.setTo(player.drag, player.drag);
 
 	fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	leftButton = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
