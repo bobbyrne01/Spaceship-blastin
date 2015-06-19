@@ -171,15 +171,15 @@ function create() {
 	emitter2.start(false, 1600, 5, 0);
 
 	// Add an emitter for the ship's trail
-	shipTrail = game.add.emitter(player.x + player.body.width / 2, player.y + player.body.height, 400);
-	shipTrail.width = 10;
-	shipTrail.makeParticles('trail');
-	shipTrail.setXSpeed(30, -30);
-	shipTrail.setYSpeed(200, 180);
-	shipTrail.setRotation(50, -50);
-	shipTrail.setAlpha(1, 0.01, 800);
-	shipTrail.setScale(0.05, 0.4, 0.05, 0.4, 2000, Phaser.Easing.Quintic.Out);
-	shipTrail.start(false, 5000, 10);
+	player.shipTrail = game.add.emitter(player.x + player.body.width / 2, player.y + player.body.height, 400);
+	player.shipTrail.width = 10;
+	player.shipTrail.makeParticles('trail');
+	player.shipTrail.setXSpeed(30, -30);
+	player.shipTrail.setYSpeed(200, 180);
+	player.shipTrail.setRotation(50, -50);
+	player.shipTrail.setAlpha(1, 0.01, 800);
+	player.shipTrail.setScale(0.05, 0.4, 0.05, 0.4, 2000, Phaser.Easing.Quintic.Out);
+	player.shipTrail.start(false, 5000, 10);
 
 	weapons.push(new Weapon.SingleBullet(game));
 	weapons.push(new Weapon.ThreeWay(game));

@@ -32,7 +32,7 @@ function shipCollide(player, enemy) {
 		explosion.body.velocity.y = player.body.velocity.y;
 		explosion.alpha = 0.7;
 		explosion.play('kaboom', 30, false, true);
-		shipTrail.kill();
+		player.shipTrail.kill();
 		player.kill();
 	}
 }
@@ -117,8 +117,8 @@ function update() {
 	player.angle = player.bank * 10;
 
 	//  Keep the shipTrail lined up with the ship
-	shipTrail.x = player.x + player.body.width / 2;
-	shipTrail.y = player.y + player.body.height;
+	player.shipTrail.x = player.x + player.body.width / 2;
+	player.shipTrail.y = player.y + player.body.height;
 
 	if (fireButton.isDown) {
 		weapons[currentWeapon].fire(player);
