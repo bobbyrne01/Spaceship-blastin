@@ -7,5 +7,6 @@ function render() {
 		game.debug.text('Click / Tap to go fullscreen', 270, 16);
 	}*/
 
-	fpsText.setText('FPS: ' + (game.time.fps || '--'));
+	//fpsText.setText('FPS: ' + (game.time.fps || '--'));
+	scoreText.setText('' + score);
 }

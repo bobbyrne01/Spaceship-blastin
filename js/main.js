@@ -1,5 +1,6 @@
 var player,
 	fpsText,
+	scoreText,
 	livesText,
 	weapons = [],
 	currentWeapon = 0,
@@ -7,13 +8,15 @@ var player,
 	explosions,
 	healthContainer,
 	healthMeter = 190,
-	acceleration = 600,
+	acceleration = 1000,
 	drag = 400,
 	maxSpeed = 400,
 	bank,
 	shipTrail,
 	greenEnemies,
-	blueEnemies;
+	blueEnemies,
+	gameOver,
+	score = 0;
 
 var game = new Phaser.Game(
 	800,

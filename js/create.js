@@ -74,6 +74,10 @@ function launchBlueEnemy() {
 }
 
 function create() {
+	
+	gameOver = game.add.bitmapText(game.world.centerX, game.world.centerY, 'font', 'GAME OVER!', 80);
+	gameOver.anchor.setTo(0.5, 0.5);
+	gameOver.visible = false;
 
 	greenEnemies = game.add.group();
 	greenEnemies.enableBody = true;
@@ -86,6 +90,10 @@ function create() {
 	greenEnemies.setAll('angle', 180);
 	greenEnemies.setAll('outOfBoundsKill', true);
 	greenEnemies.setAll('checkWorldBounds', true);
+	greenEnemies.forEach(function (enemy) {
+		enemy.damageAmount = 40;
+		enemy.reward = 5;
+	});
 	launchGreenEnemy();
 
 	blueEnemies = game.add.group();
@@ -99,6 +107,7 @@ function create() {
 	blueEnemies.setAll('angle', 180);
 	blueEnemies.forEach(function (enemy) {
 		enemy.damageAmount = 40;
+		enemy.reward = 10;
 	});
 
 	game.time.events.add(1000, launchBlueEnemy);
@@ -115,14 +124,15 @@ function create() {
 	});
 
 	fpsText = game.add.bitmapText(625, 0, 'font', '', 32);
+	scoreText = game.add.bitmapText(0, 0, 'font', '', 32);
 
 	healthContainer = game.add.graphics(0, 0);
 	healthContainer.beginFill(0x01DF01, 1.0);
-	healthContainer.drawRect(5, 5, healthMeter, 10);
+	healthContainer.drawRect(600, 5, healthMeter, 10);
 
 	health = game.add.graphics(0, 0);
 	health.beginFill(0xFFFFFF, 0.3);
-	health.drawRect(0, 0, 200, 20);
+	health.drawRect(595, 0, 200, 20);
 
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	game.stage.backgroundColor = '#000';

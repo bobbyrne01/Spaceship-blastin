@@ -15,7 +15,7 @@ function shipCollide(player, enemy) {
 	healthMeter = healthMeter - 10;
 	healthContainer.clear();
 	healthContainer.beginFill(0x01DF01, 1.0);
-	healthContainer.drawRect(5, 5, healthMeter, 10);
+	healthContainer.drawRect(600, 5, healthMeter, 10);
 
 	var explosion = explosions.getFirstExists(false);
 	explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
@@ -23,9 +23,22 @@ function shipCollide(player, enemy) {
 	explosion.alpha = 0.7;
 	explosion.play('kaboom', 30, false, true);
 	enemy.kill();
+	
+	if (healthMeter < 1){
+		player.alive = false;
+		
+		var explosion = explosions.getFirstExists(false);
+		explosion.reset(player.body.x + player.body.halfWidth, player.body.y + player.body.halfHeight);
+		explosion.body.velocity.y = player.body.velocity.y;
+		explosion.alpha = 0.7;
+		explosion.play('kaboom', 30, false, true);
+		player.kill();
+	}
 }
 
 function bulletCollide (enemy, bullet) {
+	
+	score = score + enemy.reward;
 	
 	var explosion = explosions.getFirstExists(false);
 	explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
@@ -34,6 +47,24 @@ function bulletCollide (enemy, bullet) {
 	explosion.play('kaboom', 30, false, true);
 	enemy.kill();
 	bullet.kill();
+}
+
+function restart () {
+	
+	//  Reset the enemies
+	greenEnemies.callAll('kill');
+	game.time.events.remove(greenEnemyLaunchTimer);
+	game.time.events.add(1000, launchGreenEnemy);
+	
+	//  Revive the player
+	player.revive();
+	player.health = 100;
+	//shields.render();
+	//score = 0;
+	//scoreText.render();
+	
+	//  Hide the text
+    gameOver.visible = false;
 }
 
 function update() {
@@ -93,4 +124,24 @@ function update() {
 	}
 
 	changeKey.onDown.add(toggleWeapon);
+	
+	
+	//  Game over?
+	if (! player.alive && gameOver.visible === false) {
+	    gameOver.visible = true;
+	    var fadeInGameOver = game.add.tween(gameOver);
+	    fadeInGameOver.to({alpha: 1}, 1000, Phaser.Easing.Quintic.Out);
+	    fadeInGameOver.onComplete.add(setResetHandlers);
+	    fadeInGameOver.start();
+	    function setResetHandlers() {
+	        //  The "click to restart" handler
+	        tapRestart = game.input.onTap.addOnce(_restart,this);
+	        spaceRestart = fireButton.onDown.addOnce(_restart,this);
+	        function _restart() {
+	            tapRestart.detach();
+	            spaceRestart.detach();
+	            restart();
+	        }
+	    }
+	}
 }
