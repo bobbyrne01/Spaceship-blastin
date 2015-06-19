@@ -8,5 +8,5 @@ function render() {
 	}*/
 
 	//fpsText.setText('FPS: ' + (game.time.fps || '--'));
-	scoreText.setText('' + score);
+	scoreText.setText('' + player.score);
 }

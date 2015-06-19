@@ -22,23 +22,19 @@ Bullet.prototype.fire = function (x, y, angle, speed, gx, gy) {
 	gx = gx || 0;
 	gy = gy || 0;
 
-	var bulletOffset = 30 * Math.sin(game.math.degToRad(angle));
-	this.reset(x, y + bulletOffset);
-	this.scale.set(1);
+	this.reset(x, y);
 	this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
-	this.angle = angle;
-	this.body.gravity.set(gx, gy);
+    this.angle = angle;
+    this.body.gravity.set(gx, gy);
 };
 
 Bullet.prototype.update = function () {
 
 	if (this.tracking) {
-
 		this.rotation = Math.atan2(this.body.velocity.y, this.body.velocity.x);
 	}
 
 	if (this.scaleSpeed > 0) {
-
 		this.scale.x += this.scaleSpeed;
 		this.scale.y += this.scaleSpeed;
 	}
@@ -74,8 +70,8 @@ Weapon.SingleBullet.prototype.fire = function (source) {
 		return;
 	}
 
-	var x = source.x + source.width / 2;
-	var y = source.y + source.height / 2;
+	var x = source.body.x + source.width / 2;
+	var y = source.body.y + source.height / 2;
 
 	this.getFirstExists(false).fire(x, y, source.angle - 90, this.bulletSpeed, 0, 0);
 	this.nextFire = this.game.time.time + this.fireRate;
@@ -110,12 +106,12 @@ Weapon.ThreeWay.prototype.fire = function (source) {
 		return;
 	}
 
-	var x = source.x + source.width / 2;
-	var y = source.y + source.height / 2;
+	var x = source.body.x + source.width / 2;
+	var y = source.body.y + source.height / 2;
 
-	this.getFirstExists(false).fire(x, y, 180, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 180, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 90, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 0, this.bulletSpeed, 0, 0);
 
 	this.nextFire = this.game.time.time + this.fireRate;
 };
@@ -147,17 +143,17 @@ Weapon.EightWay.prototype.fire = function (source) {
 		return;
 	}
 
-	var x = source.x + source.width / 2;
-	var y = source.y + source.height / 2;
+	var x = source.body.x + source.width / 2;
+	var y = source.body.y + source.height / 2;
 
-	this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 45, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 90, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 135, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 180, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 225, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 315, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 0, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 45, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 90, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 135, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 180, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 225, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 270, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 315, this.bulletSpeed, 0, 0);
 
 	this.nextFire = this.game.time.time + this.fireRate;
 };
@@ -190,10 +186,10 @@ Weapon.ScatterShot.prototype.fire = function (source) {
 		return;
 	}
 
-	var x = source.x + source.width / 2 + this.game.rnd.between(-10, 10);
-	var y = source.y + source.height / 2;
+	var x = source.body.x + source.width / 2 + this.game.rnd.between(-10, 10);
+	var y = source.body.y + source.height / 2;
 
-	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, 0, 0);
+	this.getFirstExists(false).fire(x, y, source.angle - 90, this.bulletSpeed, 0, 0);
 
 	this.nextFire = this.game.time.time + this.fireRate;
 

@@ -1,14 +1,3 @@
-function toggleWeapon() {
-
-	if (player.currentWeapon === 6) {
-		player.currentWeapon = 0;
-	} else {
-		player.currentWeapon++;
-	}
-
-	weapons[player.currentWeapon].visible = true;
-}
-
 function shipCollide(player, enemy) {
 
 	hit.play();
@@ -42,7 +31,7 @@ function bulletCollide(enemy, bullet) {
 
 	hit.play();
 
-	score = score + enemy.reward;
+	player.score = player.score + enemy.reward;
 
 	var explosion = explosions.getFirstExists(false);
 	explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
@@ -63,11 +52,7 @@ function restart() {
 	//  Revive the player
 	player.revive();
 	player.health = 100;
-	//shields.render();
-	//score = 0;
-	//scoreText.render();
 
-	//  Hide the text
 	gameOver.visible = false;
 }
 
@@ -105,8 +90,8 @@ function update() {
 	}
 
 	//  Stop at screen edges
-	if (player.x > game.width - (player.body.width / 2)) {
-		player.x = game.width - (player.body.width / 2);
+	if (player.x > game.width - (player.width / 2)) {
+		player.x = game.width - (player.width / 2);
 		player.body.acceleration.x = 0;
 	}
 	if (player.x < 0) {
@@ -120,14 +105,32 @@ function update() {
 	player.angle = player.bank * 10;
 
 	//  Keep the shipTrail lined up with the ship
-	player.shipTrail.x = player.x + player.body.width / 2;
-	player.shipTrail.y = player.y + player.body.height;
+	player.shipTrail.x = player.x + player.width / 2;
+	player.shipTrail.y = player.y + player.height;
 
 	if (fireButton.isDown) {
 		weapons[player.currentWeapon].fire(player);
 	}
 
-	changeKey.onDown.add(toggleWeapon);
+	
+	if (player.score >= 0 && player.score < 100){
+		player.currentWeapon = 0;
+		
+	}else if (player.score >= 100 && player.score < 200){
+		player.currentWeapon = 1;
+	}else if (player.score >= 200 && player.score < 300){
+		player.currentWeapon = 2;
+	}else if (player.score >= 300 && player.score < 400){
+		player.currentWeapon = 3;
+	}else if (player.score >= 400 && player.score < 500){
+		player.currentWeapon = 4;
+	}else if (player.score >= 500 && player.score < 600){
+		player.currentWeapon = 5;
+	}else if (player.score >= 600 && player.score < 700){
+		player.currentWeapon = 6;
+	}
+	
+	weapons[player.currentWeapon].visible = true;
 
 
 	//  Game over?
