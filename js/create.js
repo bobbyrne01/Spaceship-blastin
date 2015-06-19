@@ -110,7 +110,7 @@ function create() {
 	blueEnemies.setAll('scale.y', 0.5);
 	blueEnemies.setAll('angle', 180);
 	blueEnemies.forEach(function (enemy) {
-		enemy.damageAmount = 40;
+		enemy.damageAmount = 20;
 		enemy.reward = 10;
 	});
 

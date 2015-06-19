@@ -14,7 +14,7 @@ function shipCollide(player, enemy) {
 	
 	hit.play();
 
-	healthMeter = healthMeter - 10;
+	healthMeter = healthMeter - enemy.damageAmount;
 	healthContainer.clear();
 	healthContainer.beginFill(0x01DF01, 1.0);
 	healthContainer.drawRect(600, 5, healthMeter, 10);
