@@ -10,7 +10,7 @@ function toggleWeapon() {
 }
 
 function shipCollide(player, enemy) {
-	
+
 	hit.play();
 
 	healthMeter = healthMeter - enemy.damageAmount;
@@ -39,7 +39,7 @@ function shipCollide(player, enemy) {
 }
 
 function bulletCollide(enemy, bullet) {
-	
+
 	hit.play();
 
 	score = score + enemy.reward;

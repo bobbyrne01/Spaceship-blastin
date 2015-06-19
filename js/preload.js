@@ -2,7 +2,7 @@ function preload() {
 
 	game.time.advancedTiming = true;
 	game.time.desiredFps = 60;
-	
+
 	game.load.audio('music', 'assets/audio/POL-dual-dragon-short.wav');
 	game.load.audio('hit', 'assets/audio/Blast-SoundBible.com-2068539061.mp3');
 
