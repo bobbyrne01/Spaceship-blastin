@@ -2,6 +2,8 @@ function preload() {
 
 	game.time.advancedTiming = true;
 	game.time.desiredFps = 60;
+	
+	game.load.audio('music', 'assets/audio/POL-dual-dragon-short.wav');
 
 	game.load.image('player', 'assets/sprites/ships/F5S4.png');
 	game.load.image('alien', 'assets/sprites/ships/alien4.png');
