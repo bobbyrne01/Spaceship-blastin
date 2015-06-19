@@ -225,9 +225,9 @@ Weapon.SplitShot.prototype.fire = function (source) {
 	var x = source.x + source.width / 2;
 	var y = source.y + source.height / 2;
 
-	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, -500, 0);
+	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, -700, 0);
 	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, 0, 0);
-	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, 500, 0);
+	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, 700, 0);
 
 	this.nextFire = this.game.time.time + this.fireRate;
 

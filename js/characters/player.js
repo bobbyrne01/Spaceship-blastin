@@ -10,7 +10,7 @@ function setupPlayer() {
 	player.maxSpeed = 400;
 	player.currentWeapon = 0;
 	player.score = 0;
-	player.singleUnlocked = false;
+	player.singleUnlocked = true;
 	player.scatterUnlocked = false;
 	player.threeUnlocked = false;
 	player.splitUnlocked = false;

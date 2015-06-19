@@ -117,17 +117,65 @@ function update() {
 		player.currentWeapon = 0;
 		
 	}else if (player.score >= 100 && player.score < 200){
+		
 		player.currentWeapon = 1;
+		
+		if (player.scatterUnlocked === false){
+			player.scatterUnlocked = true;
+			
+			weaponText.setText('Scatter unlocked!');
+			game.time.events.add(5000, resetUnlocked);
+		}
+		
 	}else if (player.score >= 200 && player.score < 300){
 		player.currentWeapon = 2;
+		
+		if (player.threeUnlocked === false){
+			player.threeUnlocked = true;
+			
+			weaponText.setText('Three unlocked!');
+			game.time.events.add(5000, resetUnlocked);
+		}
+		
 	}else if (player.score >= 300 && player.score < 400){
 		player.currentWeapon = 3;
+		
+		if (player.splitUnlocked === false){
+			player.splitUnlocked = true;
+			
+			weaponText.setText('split unlocked!');
+			game.time.events.add(5000, resetUnlocked);
+		}
+		
 	}else if (player.score >= 400 && player.score < 500){
 		player.currentWeapon = 4;
+		
+		if (player.eightUnlocked === false){
+			player.eightUnlocked = true;
+			
+			weaponText.setText('eight unlocked!');
+			game.time.events.add(5000, resetUnlocked);
+		}
+		
 	}else if (player.score >= 500 && player.score < 600){
 		player.currentWeapon = 5;
+		
+		if (player.rocketUnlocked === false){
+			player.rocketUnlocked = true;
+			
+			weaponText.setText('rocket unlocked!');
+			game.time.events.add(5000, resetUnlocked);
+		}
+		
 	}else if (player.score >= 600 && player.score < 700){
 		player.currentWeapon = 6;
+		
+		if (player.scaleUnlocked === false){
+			player.scaleUnlocked = true;
+			
+			weaponText.setText('scale unlocked!');
+			game.time.events.add(5000, resetUnlocked);
+		}
 	}
 	
 	weapons[player.currentWeapon].visible = true;
@@ -155,4 +203,8 @@ function update() {
 			}
 		}
 	}
+}
+
+function resetUnlocked() {
+	weaponText.setText('');
 }
