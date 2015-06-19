@@ -11,6 +11,8 @@ function toggleWeapon() {
 }
 
 function shipCollide(player, enemy) {
+	
+	hit.play();
 
 	healthMeter = healthMeter - 10;
 	healthContainer.clear();
