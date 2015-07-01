@@ -69,23 +69,26 @@ function update() {
 		game.physics.arcade.overlap(blueEnemies, weapons[j], bulletCollide, null, this);
 	}
 
-
 	player.body.acceleration.x = 0;
 	player.body.acceleration.y = 0;
+	
+	game.input.keyboard.addKey(Phaser.Keyboard.F).onDown.add(function () { 
+		game.scale.startFullScreen(); 
+	}, game);
 
-	if (leftButton.isDown) {
+	if (left.isDown) {
 		player.body.acceleration.x = -player.acceleration;
 	}
 
-	if (rightButton.isDown) {
+	if (right.isDown) {
 		player.body.acceleration.x = player.acceleration;
 	}
 
-	if (upButton.isDown) {
+	if (up.isDown) {
 		player.body.acceleration.y = -player.acceleration;
 	}
 
-	if (downButton.isDown) {
+	if (down.isDown) {
 		player.body.acceleration.y = player.acceleration;
 	}
 
@@ -108,7 +111,7 @@ function update() {
 	player.shipTrail.x = player.x + player.width / 2;
 	player.shipTrail.y = player.y + player.height;
 
-	if (fireButton.isDown) {
+	if (fire.isDown) {
 		weapons[player.currentWeapon].fire(player);
 	}
 
