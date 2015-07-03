@@ -1,3 +1,7 @@
+### Live demo
+
+http://bobbyrne01.github.io/spaceship-blastin/
+
 ### Attributions
 
 * Ships: http://millionthvector.blogspot.co.uk/p/free-sprites.html
