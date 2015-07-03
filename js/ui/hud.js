@@ -11,4 +11,6 @@ function setupHUD() {
 	health = game.add.graphics(0, 0);
 	health.beginFill(0xFFFFFF, 0.3);
 	health.drawRect(595, 0, 200, 20);
+	
+	fullScreenText = game.add.bitmapText(0, 30, 'font', '\'f\': full screen', 18);
 }
