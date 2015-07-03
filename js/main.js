@@ -14,7 +14,7 @@ var game = new Phaser.Game(
 	800,
 	600,
 	Phaser.AUTO,
-	'Game', {
+	'Spaceship blastin\'', {
 		preload: preload,
 		create: create,
 		update: update,
