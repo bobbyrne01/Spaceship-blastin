@@ -39,7 +39,6 @@ function setupPlayer() {
 	weapons.push(new Weapon.SplitShot(game));
 	weapons.push(new Weapon.EightWay(game));
 	weapons.push(new Weapon.Rockets(game));
-	weapons.push(new Weapon.ScaleBullet(game));
 
 	for (var i = 1; i < weapons.length; i++) {
 		weapons[i].visible = false;

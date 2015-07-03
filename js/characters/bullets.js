@@ -55,7 +55,7 @@ Weapon.SingleBullet = function (game) {
 
 	for (var i = 0; i < 64; i++) {
 
-		this.add(new Bullet(game, 'bullet5'), true);
+		this.add(new Bullet(game, 'bullet'), true);
 	}
 
 	return this;
@@ -91,7 +91,7 @@ Weapon.ThreeWay = function (game) {
 
 	for (var i = 0; i < 96; i++) {
 
-		this.add(new Bullet(game, 'bullet7'), true);
+		this.add(new Bullet(game, 'bullet'), true);
 	}
 
 	return this;
@@ -128,7 +128,7 @@ Weapon.EightWay = function (game) {
 	this.fireRate = 100;
 
 	for (var i = 0; i < 96; i++) {
-		this.add(new Bullet(game, 'bullet5'), true);
+		this.add(new Bullet(game, 'bullet'), true);
 	}
 
 	return this;
@@ -171,7 +171,7 @@ Weapon.ScatterShot = function (game) {
 
 	for (var i = 0; i < 32; i++) {
 
-		this.add(new Bullet(game, 'bullet5'), true);
+		this.add(new Bullet(game, 'bullet'), true);
 	}
 
 	return this;
@@ -207,7 +207,7 @@ Weapon.SplitShot = function (game) {
 	this.fireRate = 40;
 
 	for (var i = 0; i < 64; i++) {
-		this.add(new Bullet(game, 'bullet8'), true);
+		this.add(new Bullet(game, 'bullet'), true);
 	}
 
 	return this;
@@ -245,7 +245,7 @@ Weapon.Rockets = function (game) {
 	this.fireRate = 250;
 
 	for (var i = 0; i < 32; i++) {
-		this.add(new Bullet(game, 'bullet10'), true);
+		this.add(new Bullet(game, 'missile'), true);
 	}
 
 	this.setAll('tracking', true);
@@ -270,41 +270,4 @@ Weapon.Rockets.prototype.fire = function (source) {
 
 	this.nextFire = this.game.time.time + this.fireRate;
 
-};
-
-////////////////////////////////////////////////////////////////////////
-//  A single bullet that scales in size as it moves across the screen //
-////////////////////////////////////////////////////////////////////////
-Weapon.ScaleBullet = function (game) {
-
-	Phaser.Group.call(this, game, game.world, 'Scale Bullet', false, true, Phaser.Physics.ARCADE);
-
-	this.nextFire = 0;
-	this.bulletSpeed = 800;
-	this.fireRate = 100;
-
-	for (var i = 0; i < 32; i++) {
-		this.add(new Bullet(game, 'bullet9'), true);
-	}
-
-	this.setAll('scaleSpeed', 0.05);
-
-	return this;
-};
-
-Weapon.ScaleBullet.prototype = Object.create(Phaser.Group.prototype);
-Weapon.ScaleBullet.prototype.constructor = Weapon.ScaleBullet;
-
-Weapon.ScaleBullet.prototype.fire = function (source) {
-
-	if (this.game.time.time < this.nextFire) {
-		return;
-	}
-
-	var x = source.x + source.width / 2;
-	var y = source.y + source.height / 2;
-
-	this.getFirstExists(false).fire(x, y, 270, this.bulletSpeed, 0, 0);
-
-	this.nextFire = this.game.time.time + this.fireRate;
 };

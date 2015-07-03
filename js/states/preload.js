@@ -15,7 +15,6 @@ function preload() {
 	game.load.spritesheet('rain', 'assets/sprites/other/rain.png', 17, 17);
 	game.load.bitmapFont('font', 'assets/fonts/Xenotron.png', 'assets/fonts/Xenotron.fnt');
 
-	for (var i = 1; i <= 10; i++) {
-		game.load.image('bullet' + i, 'assets/sprites/bullets/bullet' + i + '.png');
-	}
+	game.load.image('bullet', 'assets/sprites/bullets/bullet.png');
+	game.load.image('missile', 'assets/sprites/bullets/missile.png');
 }

@@ -3,7 +3,6 @@ function create() {
 	setupAudio();
 	setupEffects();
 	setupGameOver();
-	setupPauseMenu();
 	setupHUD();
 	setupPlayer();
 	setupEnemies();

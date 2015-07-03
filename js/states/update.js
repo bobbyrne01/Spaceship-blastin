@@ -169,16 +169,6 @@ function update() {
 			weaponText.setText('rocket unlocked!');
 			game.time.events.add(5000, resetUnlocked);
 		}
-		
-	}else if (player.score >= 600 && player.score < 700){
-		player.currentWeapon = 6;
-		
-		if (player.scaleUnlocked === false){
-			player.scaleUnlocked = true;
-			
-			weaponText.setText('scale unlocked!');
-			game.time.events.add(5000, resetUnlocked);
-		}
 	}
 	
 	weapons[player.currentWeapon].visible = true;
